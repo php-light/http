@@ -1,0 +1,19 @@
+{
+    "name": "romenys/http",
+    "description": "PHP library for handling http request and response",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Khalid Sookia",
+            "email": "khalidsookia@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": { "Romenys\\Http\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    }
+}
