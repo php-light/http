@@ -25,15 +25,34 @@ class Request
 
     private $server = [];
 
+    private $url = [];
 
     public function __construct(array $get, array $post, array $cookie, array $files, array $env, array $session, array $server)
     {
         if (!empty($get)) $this->setGet($get);
-        if (!empty($get)) $this->setPost($post);
-        if (!empty($get)) $this->setCookie($cookie);
-        if (!empty($get)) $this->setEnv($env);
-        if (!empty($get)) $this->setSession($session);
-        if (!empty($get)) $this->setServer($server);
+        if (!empty($post)) $this->setPost($post);
+        if (!empty($cookie)) $this->setCookie($cookie);
+        if (!empty($env)) $this->setEnv($env);
+        if (!empty($session)) $this->setSession($session);
+        if (!empty($server)) $this->setServer($server); $this->setUrl();
+    }
+
+    private function setUrl()
+    {
+        dump($this->getServer());
+        dump($this->getServer()["REQUEST_SCHEME"]);
+        $this->url["scheme"] = $this->getServer()["REQUEST_SCHEME"];
+        $this->url["host"] = $this->getServer()["HTTP_HOST"];
+        $this->url["port"] = $this->getServer()["REMOTE_PORT"];
+        $this->url["params"] = $this->getServer()["QUERY_STRING"];
+        $this->url["uri"] = $this->getServer()["REQUEST_URI"];
+        $this->url["script"] = $this->getServer()["SCRIPT_NAME"];
+        $this->url["full"] = $this->url["scheme"] . "://" . $this->url["host"] . $this->url["uri"];
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     private function setGet($get)
@@ -110,6 +129,6 @@ class Request
 
     public function all()
     {
-        return serialize($this);
+        return $this;
     }
 }
