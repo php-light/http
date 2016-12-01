@@ -8,7 +8,6 @@
 
 namespace Romenys\Http\Request;
 
-
 class Request
 {
     private $get = [];
@@ -39,8 +38,6 @@ class Request
 
     private function setUrl()
     {
-        dump($this->getServer());
-        dump($this->getServer()["REQUEST_SCHEME"]);
         $this->url["scheme"] = $this->getServer()["REQUEST_SCHEME"];
         $this->url["host"] = $this->getServer()["HTTP_HOST"];
         $this->url["port"] = $this->getServer()["REMOTE_PORT"];
