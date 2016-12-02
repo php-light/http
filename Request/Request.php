@@ -95,9 +95,30 @@ class Request
         return $this;
     }
 
+    public function addSession($key, $value)
+    {
+        $this->session[$key] = $value;
+
+        return $this;
+    }
+
+    public function removeSession($key)
+    {
+        if (isset($this->session[$key])) unset($this->session[$key]);
+
+        return $this;
+    }
+
     public function getSession()
     {
         return $this->session;
+    }
+
+    public function clearSession()
+    {
+        $this->setSession([]);
+
+        return $this;
     }
 
     private function setServer($server)
