@@ -66,7 +66,7 @@ class Request
 
     private function setPost($post)
     {
-        $this->post = filter_input_array(INPUT_POST, $post, true);
+        $this->post = $post;
 
         return $this;
     }
