@@ -8,6 +8,8 @@
 
 namespace Romenys\Http\Request;
 
+use Romenys\Helpers\UploadFile;
+
 class Request
 {
     private $get = [];
@@ -26,6 +28,8 @@ class Request
 
     private $url = [];
 
+    private $uploadedFiles = [];
+
     public function __construct(array $get, array $post, array $cookie, array $files, array $env, array $session, array $server)
     {
         if (!empty($get)) $this->setGet($get);
@@ -34,7 +38,7 @@ class Request
         if (!empty($env)) $this->setEnv($env);
         if (!empty($session)) $this->setSession($session);
         if (!empty($server)) $this->setServer($server); $this->setUrl();
-        if (!empty($files)) $this->setFiles($files);
+        if (!empty($files)) $this->setFiles($files); $this->setUploadedFiles();
     }
 
     private function setUrl()
@@ -171,6 +175,18 @@ class Request
     public function getOneFile($form, $name)
     {
         return isset($this->files[$form][$name]) ? $this->files[$form][$name] : ["error" => "File Not Found"];
+    }
+
+    private function setUploadedFiles()
+    {
+        $this->uploadedFiles = new UploadFile($this->getFiles(), null, true);
+
+        return $this;
+    }
+
+    public function getUploadedFiles()
+    {
+        return $this->uploadedFiles->getFiles();
     }
 
     public function all()
