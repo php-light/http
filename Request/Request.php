@@ -38,7 +38,7 @@ class Request
         if (!empty($env)) $this->setEnv($env);
         if (!empty($session)) $this->setSession($session);
         if (!empty($server)) $this->setServer($server); $this->setUrl();
-        if (!empty($files)) $this->setFiles($files); $this->setUploadedFiles();
+        if (!empty($files)) $this->setFiles($files);
     }
 
     private function setUrl()
@@ -177,16 +177,43 @@ class Request
         return isset($this->files[$form][$name]) ? $this->files[$form][$name] : ["error" => "File Not Found"];
     }
 
-    private function setUploadedFiles()
+    public function uploadFiles()
     {
-        $this->uploadedFiles = new UploadFile($this->getFiles(), null, true);
+        $upload = new UploadFile($this->getFiles(), null, true);
+
+        $this->uploadedFiles = $upload->getFiles();
 
         return $this;
     }
 
     public function getUploadedFiles()
     {
-        return $this->uploadedFiles->getFiles();
+        return $this->uploadedFiles;
+    }
+
+    public function removeFile($file)
+    {
+        if (is_file($file)) {
+            if (unlink($file)) {
+                $done = true;
+
+                $uploadedFiles = [];
+
+                foreach ($this->getUploadedFiles() as $uploadedFile) {
+                    if ($uploadedFile["uploaded_file"] !== $file) {
+                        $uploadedFiles[] = $uploadedFile;
+                    }
+                }
+
+                $this->uploadedFiles = $uploadedFiles;
+            } else {
+                $done = false;
+            }
+        } else {
+            $done = false;
+        }
+
+        return $done;
     }
 
     public function all()
