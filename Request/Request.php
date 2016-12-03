@@ -34,6 +34,7 @@ class Request
         if (!empty($env)) $this->setEnv($env);
         if (!empty($session)) $this->setSession($session);
         if (!empty($server)) $this->setServer($server); $this->setUrl();
+        if (!empty($files)) $this->setFiles($files);
     }
 
     private function setUrl()
@@ -143,6 +144,33 @@ class Request
     public function getEnv()
     {
         return $this->env;
+    }
+
+    private function setFiles($files)
+    {
+        $filesArray = [];
+
+        foreach ($files as $formName => $filesContainer) {
+            foreach ($filesContainer as $key => $info) {
+                foreach ($info as $fieldKey => $fieldValue) {
+                    $filesArray[$formName][$fieldKey][$key] = $fieldValue;
+                }
+            }
+        }
+
+        $this->files = $filesArray;
+
+        return $this;
+    }
+
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+    public function getOneFile($form, $name)
+    {
+        return isset($this->files[$form][$name]) ? $this->files[$form][$name] : ["error" => "File Not Found"];
     }
 
     public function all()
