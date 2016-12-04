@@ -8,8 +8,6 @@
 
 namespace Romenys\Http\Response;
 
-use Romenys\Framework\Response\Response;
-
 class JsonResponse extends Response
 {
     private $data;
