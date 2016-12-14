@@ -43,13 +43,13 @@ class Request
 
     private function setUrl()
     {
-        $this->url["scheme"] = $this->getServer()["REQUEST_SCHEME"];
+        $this->url["scheme"] = isset($this->getServer()["REQUEST_SCHEME"]) ? $this->getServer()["REQUEST_SCHEME"] . "://" : "http://";
         $this->url["host"] = $this->getServer()["HTTP_HOST"];
         $this->url["port"] = $this->getServer()["REMOTE_PORT"];
         $this->url["params"] = $this->getServer()["QUERY_STRING"];
         $this->url["uri"] = $this->getServer()["REQUEST_URI"];
         $this->url["script"] = $this->getServer()["SCRIPT_NAME"];
-        $this->url["full"] = $this->url["scheme"] . "://" . $this->url["host"] . $this->url["uri"];
+        $this->url["full"] = $this->url["scheme"] . $this->url["host"] . $this->url["uri"];
     }
 
     public function getUrl()
