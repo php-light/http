@@ -102,14 +102,14 @@ class Request
 
     public function addSession($key, $value)
     {
-        $this->session[$key] = $value;
+        $_SESSION[$key] = $value;
 
         return $this;
     }
 
     public function removeSession($key)
     {
-        if (isset($this->session[$key])) unset($this->session[$key]);
+        if (isset($_SESSION[$key])) unset($_SESSION[$key]);
 
         return $this;
     }
@@ -124,6 +124,14 @@ class Request
         $this->setSession([]);
 
         return $this;
+    }
+
+    public function isAuthenticated()
+    {
+        if (isset($this->session["security"]["isAuthenticated"]) && $this->session["security"]["isAuthenticated"] === true)
+            return true;
+        else
+            return false;
     }
 
     private function setServer($server)
