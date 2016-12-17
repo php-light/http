@@ -128,10 +128,12 @@ class Request
 
     public function isAuthenticated()
     {
-        if (isset($this->session["security"]["isAuthenticated"]) && $this->session["security"]["isAuthenticated"] === true)
-            return true;
-        else
-            return false;
+        $isAuthenticated = false;
+
+        if (isset($this->getSession()["security"]["isAuthenticated"]) && $this->getSession()["security"]["isAuthenticated"] === true)
+            $isAuthenticated = true;
+
+        return $isAuthenticated;
     }
 
     private function setServer($server)
