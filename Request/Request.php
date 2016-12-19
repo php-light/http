@@ -8,6 +8,7 @@
 
 namespace Romenys\Http\Request;
 
+use Romenys\Framework\Components\Config;
 use Romenys\Helpers\UploadFile;
 
 class Request
@@ -137,6 +138,24 @@ class Request
             $isAuthenticated = true;
 
         return $isAuthenticated;
+    }
+
+    public function getUser()
+    {
+        $userArray = $this->isAuthenticated() ? $this->getSession()["security"]["user"] : false;
+
+        if ($userArray) {
+            $config = new Config();
+            $userModel = empty($config->getConfig()["user_class"]) ? false : $config->getConfig()["user_class"];
+
+            if (!$userModel) throw new \Exception("You must provide a user class in your config");
+
+            $user = new $userModel($userArray);
+
+            return $user;
+        } else {
+            return "No user is connected";
+        }
     }
 
     private function setServer($server)
