@@ -12,6 +12,9 @@ use Romenys\Helpers\UploadFile;
 
 class Request
 {
+    const REQUEST_METHOD_POST = "POST";
+    const REQUEST_METHOD_GET = "GET";
+
     private $get = [];
 
     private $post = [];
@@ -199,6 +202,11 @@ class Request
     public function getUploadedFiles()
     {
         return $this->uploadedFiles;
+    }
+
+    public function getMethod()
+    {
+        return empty($this->getServer()["REQUEST_METHOD"]) ? false : strtoupper($this->getServer()["REQUEST_METHOD"]);
     }
 
     public function removeFile($file)
