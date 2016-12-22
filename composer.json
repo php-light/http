@@ -9,11 +9,15 @@
             "email": "khalidsookia@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+      "php": ">=5.4",
+      "romenys/helpers": ">=0.0.1"
+    },
     "autoload": {
         "psr-4": { "Romenys\\Http\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]
-    }
+    },
+    "minimum-stability": "dev"
 }
