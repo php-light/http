@@ -8,6 +8,7 @@
 
 namespace Romenys\Http\Request;
 
+use BNPPARIBAS\REFOG\AuthenticatorBundle\Entity\User;
 use Romenys\Framework\Components\Config;
 use Romenys\Helpers\UploadFile;
 
@@ -140,6 +141,10 @@ class Request
         return $isAuthenticated;
     }
 
+    /**
+     * @throws \Exception
+     * @return User|string
+     */
     public function getUser()
     {
         $userArray = $this->isAuthenticated() ? $this->getSession()["security"]["user"] : false;
