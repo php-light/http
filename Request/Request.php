@@ -121,7 +121,7 @@ class Request
 
     public function getSession()
     {
-        return $this->session;
+        return $_SESSION;
     }
 
     public function clearSession()
