@@ -142,25 +142,11 @@ class Request
     }
 
     /**
-     * @throws \Exception
-     * @return User|string
+     * @return User|bool
      */
     public function getUser()
     {
-        $userArray = $this->isAuthenticated() ? $this->getSession()["security"]["user"] : false;
-
-        if ($userArray) {
-            $config = new Config();
-            $userModel = empty($config->getConfig()["user_class"]) ? false : $config->getConfig()["user_class"];
-
-            if (!$userModel) throw new \Exception("You must provide a user class in your config");
-
-            $user = new $userModel($userArray);
-
-            return $user;
-        } else {
-            return "No user is connected";
-        }
+        return $this->isAuthenticated() ? $this->getSession()["security"]["fullUser"] : false;
     }
 
     private function setServer($server)
