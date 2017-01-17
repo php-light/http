@@ -149,6 +149,48 @@ class Request
         return $this->isAuthenticated() ? $this->getSession()["security"]["fullUser"] : false;
     }
 
+    /**
+     * Checks if actual connected user has ROLE_USER
+     *
+     * @return bool
+     */
+    public function isUserRoleUser()
+    {
+        $user = $this->getUser();
+
+        if ($user && $user->isUser()) return true;
+
+        return false;
+    }
+
+    /**
+     * Check if actual user has ROLE_ADMIN
+     *
+     * @return bool
+     */
+    public function isUserRoleAdmin()
+    {
+        $user = $this->getUser();
+
+        if ($user && $user->isAdmin()) return true;
+
+        return false;
+    }
+
+    /**
+     * Check if actual connected user has ROLE_SUPER_ADMIN
+     *
+     * @return bool
+     */
+    public function isUserRoleSuperAdmin()
+    {
+        $user = $this->getUser();
+
+        if ($user && $user->isSuperAdmin()) return true;
+
+        return false;
+    }
+
     private function setServer($server)
     {
         $this->server = filter_input_array(INPUT_SERVER, $server, true);
