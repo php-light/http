@@ -270,7 +270,7 @@ class Request
                 $uploadedFiles = [];
 
                 foreach ($this->getUploadedFiles() as $uploadedFile) {
-                    if ($uploadedFile["uploaded_file"] !== $file) {
+                    if (isset($uploadedFile["uploaded_file"]) && $uploadedFile["uploaded_file"] !== $file) {
                         $uploadedFiles[] = $uploadedFile;
                     }
                 }
