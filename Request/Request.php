@@ -146,7 +146,7 @@ class Request
      */
     public function getUser()
     {
-        return $this->isAuthenticated() ? $this->getSession()["security"]["fullUser"] : false;
+        return $this->isAuthenticated() ? $this->getSession()["security"]["user"] : false;
     }
 
     /**
