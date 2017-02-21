@@ -135,8 +135,10 @@ class Request
     {
         $isAuthenticated = false;
 
-        if (isset($this->getSession()["security"]["isAuthenticated"]) && $this->getSession()["security"]["isAuthenticated"] === true)
+        if (isset($this->getSession()["security"]["isAuthenticated"]) &&
+            $this->getSession()["security"]["isAuthenticated"] === true) {
             $isAuthenticated = true;
+        }
 
         return $isAuthenticated;
     }
