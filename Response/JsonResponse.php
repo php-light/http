@@ -6,7 +6,7 @@
  * Time: 00:57
  */
 
-namespace Romenys\Http\Response;
+namespace PhpLight\Http\Response;
 
 class JsonResponse extends Response
 {

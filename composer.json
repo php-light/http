@@ -1,5 +1,5 @@
 {
-    "name": "romenys/http",
+    "name": "php-light/http",
     "description": "PHP library for handling http request and response",
     "type": "library",
     "license": "MIT",
@@ -11,10 +11,10 @@
     ],
     "require": {
       "php": ">=5.4",
-      "romenys/helpers": ">=0.0.1"
+      "php-light/helpers": ">=0.0.1"
     },
     "autoload": {
-        "psr-4": { "Romenys\\Http\\": "" },
+        "psr-4": { "PhpLight\\Http\\": "" },
         "exclude-from-classmap": [
             "/Tests/"
         ]

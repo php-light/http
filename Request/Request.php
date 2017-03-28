@@ -6,11 +6,11 @@
  * Time: 19:43
  */
 
-namespace Romenys\Http\Request;
+namespace PhpLight\Http\Request;
 
 use BNPPARIBAS\REFOG\AuthenticatorBundle\Entity\User;
-use Romenys\Framework\Components\Config;
-use Romenys\Helpers\UploadFile;
+use PhpLight\Framework\Components\Config;
+use PhpLight\Helpers\UploadFile;
 
 class Request
 {

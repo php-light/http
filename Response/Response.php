@@ -6,7 +6,7 @@
  * Time: 01:00
  */
 
-namespace Romenys\Http\Response;
+namespace PhpLight\Http\Response;
 
 
 class Response
