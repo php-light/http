@@ -8,6 +8,7 @@
 
 namespace PhpLight\Http\Request;
 
+use BNPPARIBAS\REFOG\AuthenticatorBundle\Controller\SSOController;
 use BNPPARIBAS\REFOG\AuthenticatorBundle\Entity\User;
 use PhpLight\Framework\Components\Config;
 use PhpLight\Helpers\UploadFile;
@@ -44,6 +45,15 @@ class Request
         if (!empty($session)) $this->setSession($session);
         if (!empty($server)) $this->setServer($server); $this->setUrl();
         if (!empty($files)) $this->setFiles($files);
+
+
+        if (!empty($this->getSession()) &&
+            (isset($this->getSession()["isAuthenticated"]) && $this->getSession()["isAuthenticated"] !== true)
+        ) {
+            if (SSOController::isSsoEnabled($this)) {
+                SSOController::authenticate($this);
+            }
+        }
     }
 
     private function setUrl()
