@@ -46,10 +46,8 @@ class Request
         if (!empty($server)) $this->setServer($server); $this->setUrl();
         if (!empty($files)) $this->setFiles($files);
 
+        if (!isset($this->getSession()["isAuthenticated"]) || $this->getSession()["isAuthenticated"] !== true) {
 
-        if (!empty($this->getSession()) &&
-            (isset($this->getSession()["isAuthenticated"]) && $this->getSession()["isAuthenticated"] !== true)
-        ) {
             if (SSOController::isSsoEnabled($this)) {
                 SSOController::authenticate($this);
             }
