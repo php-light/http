@@ -8,9 +8,7 @@
 
 namespace PhpLight\Http\Request;
 
-use BNPPARIBAS\REFOG\AuthenticatorBundle\Controller\SSOController;
 use BNPPARIBAS\REFOG\AuthenticatorBundle\Entity\User;
-use PhpLight\Framework\Components\Config;
 use PhpLight\Helpers\UploadFile;
 
 class Request
@@ -36,8 +34,11 @@ class Request
 
     private $uploadedFiles = [];
 
+    private $headers = [];
+
     public function __construct(array $get, array $post, array $cookie, array $files, array $env, array $session, array $server)
     {
+        $this->setHeaders();
         if (!empty($get)) $this->setGet($get);
         if (!empty($post)) $this->setPost($post);
         if (!empty($cookie)) $this->setCookie($cookie);
@@ -45,13 +46,6 @@ class Request
         if (!empty($session)) $this->setSession($session);
         if (!empty($server)) $this->setServer($server); $this->setUrl();
         if (!empty($files)) $this->setFiles($files);
-
-        if (!isset($this->getSession()["isAuthenticated"]) || $this->getSession()["isAuthenticated"] !== true) {
-
-            if (SSOController::isSsoEnabled($this)) {
-                SSOController::authenticate($this);
-            }
-        }
     }
 
     private function setUrl()
@@ -68,6 +62,18 @@ class Request
     public function getUrl()
     {
         return $this->url;
+    }
+
+    private function setHeaders()
+    {
+        $this->headers = getallheaders();
+
+        return $this;
+    }
+
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     private function setGet($get)
