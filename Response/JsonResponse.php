@@ -16,9 +16,9 @@ class JsonResponse extends Response
 
     public function __construct(array $data, $options = [], $status = 200, $headers = [], $json = false)
     {
+        $this->setOptions($options);
         $this->setData($data, $json);
         $this->sendResponse();
-        $this->setOptions($options);
     }
 
     private function setOptions($options)
@@ -31,6 +31,13 @@ class JsonResponse extends Response
     private function setData($data, $json)
     {
         $json ? $this->data = $data : $this->data = json_encode($data, JSON_UNESCAPED_SLASHES, 512);
+
+        if (json_last_error()) {
+            $this->data = json_encode(json_last_error_msg());
+            echo "<pre>";
+            var_dump($data);
+            echo "</pre>";
+        }
 
         return $this;
     }
