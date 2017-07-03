@@ -88,6 +88,15 @@ class Request
         return $this->get;
     }
 
+    public function getGetData()
+    {
+        $data = $this->get;
+
+        unset($data["route"]);
+
+        return $data;
+    }
+
     private function setPost($post)
     {
         $this->post = $post;
