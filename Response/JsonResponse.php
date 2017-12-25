@@ -30,6 +30,7 @@ class JsonResponse extends Response
 
         return $this;
     }
+    
     private function setStatus($status)
     {
         $this->status = $status;
