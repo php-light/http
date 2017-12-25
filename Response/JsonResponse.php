@@ -14,12 +14,9 @@ class JsonResponse extends Response
 
     private $options;
 
-    private $status;
-    
     public function __construct(array $data, $options = [], $status = 200, $headers = [], $json = false)
     {
         $this->setOptions($options);
-        $this->setStatus($status);
         $this->setData($data, $json);
         $this->sendResponse();
     }
@@ -28,11 +25,6 @@ class JsonResponse extends Response
     {
         $this->options = $options;
 
-        return $this;
-    }
-    private function setStatus($status)
-    {
-        $this->status = $status;
         return $this;
     }
 
@@ -57,7 +49,6 @@ class JsonResponse extends Response
 
     private function sendResponse()
     {
-        header("HTTP/1.1 ". $this->status);
         echo $this->getData();
     }
 }
