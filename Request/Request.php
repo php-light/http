@@ -311,6 +311,17 @@ class Request
         return $done;
     }
 
+    public function deleteAllUploadedFiles()
+    {
+        foreach ($this->getUploadedFiles() as $uploadedFile) {
+            if (is_file($uploadedFile["uploaded_file"])) {
+                unlink($uploadedFile["uploaded_file"]);
+            }
+        }
+
+        return true;
+    }
+
     public function all()
     {
         return $this;
