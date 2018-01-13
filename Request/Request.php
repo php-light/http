@@ -311,11 +311,22 @@ class Request
         return $done;
     }
 
+    private function deleteFile($path)
+    {
+        if (is_file($path)) {
+            unlink($path);
+        }
+    }
+
     public function deleteAllUploadedFiles()
     {
         foreach ($this->getUploadedFiles() as $uploadedFile) {
-            if (is_file($uploadedFile["uploaded_file"])) {
-                unlink($uploadedFile["uploaded_file"]);
+            if (isset($uploadedFile["name"])) {
+                $this->deleteFile($uploadedFile["uploaded_file"]);
+            } else {
+                foreach ($uploadedFile as $file) {
+                    $this->deleteFile($file["uploaded_file"]);
+                }
             }
         }
 
