@@ -9,6 +9,7 @@
 namespace PhpLight\Http\Request;
 
 use BNPPARIBAS\REFOG\AuthenticatorBundle\Entity\User;
+use PhpLight\Framework\Components\Config;
 use PhpLight\Helpers\UploadFile;
 
 class Request
@@ -46,6 +47,24 @@ class Request
         if (!empty($session)) $this->setSession($session);
         if (!empty($server)) $this->setServer($server); $this->setUrl();
         if (!empty($files)) $this->setFiles($files);
+
+        $config = (new Config())->getConfig();
+
+        if (isset($config["listners"]) && isset($config["listners"]["onRequest"])) {
+            $requestListener = $config["listners"]["onRequest"];
+
+            if (!is_object(new $requestListener["register_class"])) {
+                dump("You need to specify an object in the register_class attr");
+                die;
+            }
+
+            if (!method_exists(new $requestListener["register_class"], $requestListener["method"])) {
+                dump("We did not find the method");
+                die;
+            }
+
+            $requestListener["register_class"]::$requestListener["method"]();
+        }
     }
 
     private function setUrl()

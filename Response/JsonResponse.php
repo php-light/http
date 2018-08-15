@@ -39,7 +39,7 @@ class JsonResponse extends Response
 
     private function setData($data, $json)
     {
-        $json ? $this->data = $data : $this->data = json_encode($data, JSON_UNESCAPED_SLASHES, 512);
+        $json ? $this->data = $data : $this->data = json_encode($data, JSON_UNESCAPED_SLASHES, 1024);
 
         if (json_last_error()) {
             $this->data = json_encode(json_last_error_msg());
