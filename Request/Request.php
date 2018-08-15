@@ -63,7 +63,10 @@ class Request
                 die;
             }
 
-            $requestListener["register_class"]::$requestListener["method"]();
+            $listener = new $requestListener["register_class"];
+            $listenerMethod = $requestListener["method"];
+
+            $listener->$listenerMethod();
         }
     }
 
